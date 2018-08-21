@@ -1,0 +1,24 @@
+language: java
+
+jdk: oraclejdk8
+
+git:
+  depth: false
+
+branches:
+  only:
+  - master
+  - "/^[0-9]{1,4}\\.[0-9]{1,4}\\.[0-9]{1,4}(-[rR][cC][0-9]{1,4})?$/"
+
+script: "./gradlew build"
+
+deploy:
+  provider: releases
+  api_key:
+    secure: MjfUJzZyjPHuTiNAli5NqolUfZSzhUn1/D1ljiMfMzhDIdq1/zMtAhaPGREz6ksQSL/pH/sdvC2jOiFwb2xcBzWwN++yeSVQeLJtzZwjPxPv8hKT2dHqs5AREw2bQPDJvlje/zEi3y2n6r4o5Kuf/m+OSiA8W9rD4ssuehzoI+DWIGVBj4AJYRTPcEkfLyT+3Xct7k4c0niscQ8FvUlLK7WTt+CbvXcsWs5uJ+EfSsYsfj3iSiY9hiy0HnqmKnh2Islshv8mXJ8HKQIwY3hN4v2PxYZudBOst1psw79gwnayNal52iBd9aEXAFjBZKAh8G/9pugF1h2d/R6bCTGu5zIUKNYE/3agKxR8wml8THKre4p9LCokAads5dxeCzgraH2ZAtSpLFQ0ISDR8fVc15CBSFgNpskfS+IkbuWAN/5EsXDXR/EcLkNZk1vPiduKNiCcXt6M5z4B7uOFuz7YtoiB9fAq4k3YtHqYDLHffPpunWgSv1UnWHjKc0V+JXmUrwqiboP4rRp7ilKIIfujfTyjn5u/w4I2KlD96IVHks/+o+aFbO/diPrS3QWEmJlBWCW2m+w1xl5MpLJVuX0NjNWefqwmcCn6wUSa9zUS9rOR4ikOzWNCc0ldp21HmEeR71VmGDHrp5i4q/qAaWyn1h4oP2UrNWNQsRjua/XXbKE=
+  skip_cleanup: true
+  file_glob: true
+  file: play-publisher/build/libs/play-publisher-*.jar
+  on:
+    tags: true
+    repo: moonlitdoor/mld-play-publisher
