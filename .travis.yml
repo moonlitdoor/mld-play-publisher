@@ -1,19 +1,18 @@
 language: java
-
 jdk: oraclejdk8
-
 git:
   depth: false
-
 branches:
   only:
   - master
   - "/^[0-9]{1,4}\\.[0-9]{1,4}\\.[0-9]{1,4}(-[rR][cC][0-9]{1,4})?$/"
-
 script: "./gradlew build"
-
+env:
+  global:
+  - secure: jRPas0kNSPpI58YwRCa6XPFxvOobDJOVa85WOPYIGrHV2l+9Q7nR3h/z7lgkoxfv2JKvxlBsYvo/Bgwa+qou5gg+sLe22BmNi/5Eba1fktAFAJWn0awC5hfhoHvKz7T96REOiC9UpsJ0IMJOGH+0Oc7c+BPewtHpu6Lv4FL3JVqQNxpAWN507e1ub0UkGiFVvshtSmNuEq7gmqXc02MYjuBEbR9/dlcrCGs0ImNN09rueLXR+WIl0eU0/C84o8Fr6fvxDqOITOnJnfIvTMigQnRafODDhDUTWZ2vp1dpx3ldRScPQx5JrEc5cOckm3IqCuyeD7n2kPbWzac3XpEyBhFkDVmw3fnn48teA3nD1jxF5KO9amjFiG9XCu/mkaGKjps1b8HxQyJ1jPj+aShDMFAz3OJxHqycwWIYyqE+qr+bSSt6McuLWlDwlcNuFp8BRFvZYixqGX1HmATL2BCUuinZwXrrGlOrTnmxk5muxnakZastvEu0XvxdInBmoaOI3fe+8fH4d3k8MMmBcSPpZbJBGkySiqUP/JzOl4k1mlhGvBc8zz4livzaoR9GIDm1ZFTRRlCOXTvz8pio7W0t6mMqLVIJ6BN6NP7PfBqB/bt+QNdDlO1DJxaiuua19aORxLkTmdxb8gJtU66BeWhYY8JSSBEbcEKmg7kv/xE5DPA=
+  - secure: YWl4OjAO33OMz6tCI4LlUmf0eCkCsnt/AUGmOWijdGaGODMkIwQ+urngUIPbVdynPdestzNJbnDYw73Ur71VoYo2u3JlRep+y/dKhjvYWesq2eeDfbtz+UVwmYLZkNfF0VjHhZ+t8ogTD4qFqci9idSk0C6yijuZcEx2LsrIsfjbF6tIpwqnCHo6a8e4NnAh6GvqQH7cQae8uJ0AS49LIdjxQtG7nbQl3ef/wQBhN1i+bMJPCYQuNHZ0h8AifkSli6tvrUeS5pyoeb0YlOA+YlFqKvFwbvTC5lN2SAuDJqGmY4sP7qNEqFfH4Jt5/NDeV6zJlZKxf1XwiKFRwq2PPnCCTjh5kgJ+u9vQvGqsldrRWwHujeg27LzuIeLIaFneELV8A6hElnPt9S3LJtV5ycZjxFf61RlTVa5CqLuKp2LOO2KNRSVNFZdA1v0jMsTmREZk5mn5F0tTfY8Rs+IcH/PRCwVTyxIPnaLlRAQNh1BBJmU/VLFFBN/0a+/ZzTwjCOm6cUrS4GAWtgT0noxr5mNRDawh54xmXLo84THrHFdMibhXMyxBKuqUjrntK7/PbPsR83WLE7F8fbsg6FlNXhU3RaoHlfzCrNmXApYkY2GrISzIhASEZb051lgbQzmxxAqMwm9+CiGmBlDqPaLcoPAUR8qBYb9MIz6iF9eRBQQ=
 deploy:
-  provider: releases
+- provider: releases
   api_key:
     secure: MjfUJzZyjPHuTiNAli5NqolUfZSzhUn1/D1ljiMfMzhDIdq1/zMtAhaPGREz6ksQSL/pH/sdvC2jOiFwb2xcBzWwN++yeSVQeLJtzZwjPxPv8hKT2dHqs5AREw2bQPDJvlje/zEi3y2n6r4o5Kuf/m+OSiA8W9rD4ssuehzoI+DWIGVBj4AJYRTPcEkfLyT+3Xct7k4c0niscQ8FvUlLK7WTt+CbvXcsWs5uJ+EfSsYsfj3iSiY9hiy0HnqmKnh2Islshv8mXJ8HKQIwY3hN4v2PxYZudBOst1psw79gwnayNal52iBd9aEXAFjBZKAh8G/9pugF1h2d/R6bCTGu5zIUKNYE/3agKxR8wml8THKre4p9LCokAads5dxeCzgraH2ZAtSpLFQ0ISDR8fVc15CBSFgNpskfS+IkbuWAN/5EsXDXR/EcLkNZk1vPiduKNiCcXt6M5z4B7uOFuz7YtoiB9fAq4k3YtHqYDLHffPpunWgSv1UnWHjKc0V+JXmUrwqiboP4rRp7ilKIIfujfTyjn5u/w4I2KlD96IVHks/+o+aFbO/diPrS3QWEmJlBWCW2m+w1xl5MpLJVuX0NjNWefqwmcCn6wUSa9zUS9rOR4ikOzWNCc0ldp21HmEeR71VmGDHrp5i4q/qAaWyn1h4oP2UrNWNQsRjua/XXbKE=
   skip_cleanup: true
@@ -22,3 +21,11 @@ deploy:
   on:
     tags: true
     repo: moonlitdoor/mld-play-publisher
+- provider: script
+  script: "./gradlew publishPlugins -Pgradle.publish.key=$GRADLE_PUBLISH_KEY -Pgradle.publish.secret=$GRADLE_PUBLISH_SECRET"
+  on:
+    tags: true
+notifications:
+  slack:
+    rooms:
+    - secure: LBG+1GNka2P3FvCnRsCz4xyyFLR/bHow8MhVR7SR1uYT37MQIQgPirAdF/ZKsDOLWy69naklSFDuhMYl/EksjtGslGG2vWv5zd+wU2wLhJHoth91JNv4YKpj6tP7tNUUz/olyp0EtAF7l4qu2VdJRg0ZPlzwq+mNZ99Lm9HxFf2mnJ3KqS4cRsxwJL5kOrkeW3Q4gqFfXuZIBQ2aNGEOB9rkkJKkgMjC70qbcRN6qqHco69h18o2ljvMKqmZRegcPctvGQh3vEVKPt55s2bs8okxWDW/In4W3rvto6tlnM0D77TOwu1PT1XaSi7kGWm61zy/43iltEvsEfkFllH52J+6ANV/if5oGfCE5/VrhpIjCp4XrGwCdD+Ah+RJZQApFothCpYcTlp8Ivb+YdCt4aaSs9QjA8jesW96LbvbQaOK/4dPC5cmI7O428lwozr8JMIoyIpAkySSdlSue/t1wVFNRQ/MUarxc9/rK2lRRq9Pp5kmMap59LO8sNATZxgL0Fcj5iQ5jeGZ7H3RZZ4584bVQ9dY4xkWvgxfInWdnatOCcDMmTmGCNcW4pGSdifQoUMR6iMmhBkJWh/AYx2/RHASYMp/2Tv1SCxuzgjISNxsAg8PMNvimdyZ2NLJD6/yWbT0M5uviohupAEzrivyvFXcJSAgvMAg+n/ll9AC840=

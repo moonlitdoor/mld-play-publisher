@@ -1,2 +1,2 @@
 include 'play-publisher'
-
+enableFeaturePreview('STABLE_PUBLISHING')

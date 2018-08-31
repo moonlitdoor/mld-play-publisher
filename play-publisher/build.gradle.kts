@@ -1,20 +1,41 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.2.60"
+    `java-gradle-plugin`
+    `kotlin-dsl`
+    `maven-publish`
+    id("com.moonlitdoor.git-version") version "0.0.8"
+    id("com.gradle.plugin-publish") version "0.10.0"
 }
 
-group = "com.moonlitdoor.play-publisher"
-version = "1.0-SNAPSHOT"
+version = gitVersion
 
-repositories {
-    mavenCentral()
+kotlinDslPluginOptions {
+    experimentalWarning.set(false)
 }
 
 dependencies {
     compile(kotlin("stdlib-jdk8"))
+    testImplementation("junit:junit:4.12")
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+gradlePlugin {
+    plugins {
+        register("play-publisher") {
+            id = "com.moonlitdoor.play-publisher"
+            implementationClass = "com.moonlitdoor.play.publisher.PlayPublisherPlugin"
+        }
+    }
+}
+
+pluginBundle {
+    website = "https://github.com/moonlitdoor/mld-play-publisher"
+    vcsUrl = "https://github.com/moonlitdoor/mld-play-publisher"
+    description = "A Gradle plugin that publishes Android apps to the Google Play Store."
+    (plugins) {
+        "play-publisher" {
+            displayName = "Play Publisher Plugin"
+            tags = listOf("Android", "Play", "Publish")
+        }
+    }
 }
