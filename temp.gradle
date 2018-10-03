@@ -1,0 +1,11 @@
+buildscript {
+    dependencies {
+        classpath "com.moonlitdoor.play-publisher:play-publisher:0.0.1-2-SNAPSHOT"
+    }
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+}
+
+apply plugin: "com.moonlitdoor.play-publisher"
